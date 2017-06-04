@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity{
     "メニュー",
     "電話をかける"
   };
-  int curapp=1;
+  int curapp=0;
   SimpleDateFormat sdf=new SimpleDateFormat("HH:mm");
   int curpos=0;
   String telnumber="";
@@ -218,7 +218,8 @@ public class MainActivity extends AppCompatActivity{
       protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
         paint();
-        canvas.drawBitmap(bitmap,new Rect(0,0,SW,SH),new Rect(0,0,480,854),p);
+        double z=(double)getWidth()/SW;
+        canvas.drawBitmap(bitmap,new Rect(0,0,SW,SH),new Rect(0,0,getWidth(),(int)(SH*z)),p);
       }
     };
     //電池----------------------------------------------------------------------
