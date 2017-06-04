@@ -139,7 +139,6 @@ public class MainActivity extends AppCompatActivity{
     bitmap=Bitmap.createBitmap(SW,SH,Bitmap.Config.ARGB_8888);
     g=new Canvas(bitmap);
     typeface=Typeface.createFromAsset(getAssets(),"PixelMplus12-Regular.ttf");
-    //typeface=Typeface.createFromAsset(getAssets(),"SH G30.ttc");
     p=new Paint();
     p.setTypeface(typeface);
     view=new View(this){
@@ -182,10 +181,8 @@ public class MainActivity extends AppCompatActivity{
     );
   }
   @Override
-  public boolean dispatchKeyEvent(KeyEvent event){
-    if(event.getAction()==KeyEvent.ACTION_UP){
-      key(event.getKeyCode());
-    }
+  public boolean onKeyDown(int keyCode,KeyEvent event){
+    key(keyCode);
     return false;
   }
   //============================================================================
