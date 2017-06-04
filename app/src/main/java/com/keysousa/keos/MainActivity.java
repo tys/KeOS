@@ -22,12 +22,15 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity{
   String[] APPS=new String[]{
     "[1]アプリ1","[2]アプリ2","[3]アプリ3","[4]アプリ4",
     "[5]アプリ5","[6]アプリ6","[7]アプリ7"
   };
+  SimpleDateFormat sdf=new SimpleDateFormat("HH:mm");
   int curpos=0;
   public void paint(){
     //画面クリア-----------------------------------------------------------------
@@ -67,6 +70,10 @@ public class MainActivity extends AppCompatActivity{
     g.drawRect(27,7,29,12,p);
     g.drawRect(30,4,32,12,p);
     g.drawRect(33,1,35,12,p);
+    //時刻
+    p.setColor(Color.BLACK);
+    p.setTextSize(FONT);
+    g.drawText(sdf.format(new Date()),90,FONT,p);
     //タイトル-------------------------------------------------------------------
     y+=FONT+1;
     p.setStyle(Paint.Style.FILL);
