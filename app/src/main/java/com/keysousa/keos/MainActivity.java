@@ -12,6 +12,7 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.BatteryManager;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneStateListener;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity{
     p.setStyle(Paint.Style.FILL);
     p.setTextSize(FONT);
     int i=0;
-    for(String s: APPS){
+    for(String s:APPS){
       p.setColor(i==curpos?Color.WHITE:Color.BLACK);
       g.drawText(s,0,y+FONT,p);
       y+=FONT+2;
@@ -131,6 +132,8 @@ public class MainActivity extends AppCompatActivity{
   Bitmap bitmap;
   Typeface typeface;
   View view;
+  Handler handler=new Handler();
+  int DELAY=1000;
   int batteryLevel=0;
   @Override
   protected void onCreate(Bundle savedInstanceState){
@@ -179,6 +182,13 @@ public class MainActivity extends AppCompatActivity{
     getWindow().getDecorView().setSystemUiVisibility(
       View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN
     );
+    handler.postDelayed(new Runnable(){
+      @Override
+      public void run(){
+        view.invalidate();
+        handler.postDelayed(this,DELAY);
+      }
+    },DELAY);
   }
   @Override
   public boolean onKeyDown(int keyCode,KeyEvent event){
