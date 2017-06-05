@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.media.AudioManager;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -65,7 +66,14 @@ public class MainActivity extends AppCompatActivity{
     g.drawRect(27,7,29,12,p);
     g.drawRect(30,4,32,12,p);
     g.drawRect(33,1,35,12,p);
-    //時刻
+    //マナーモード---------------------------------------------------------------
+    p.setColor(Color.BLACK);
+    p.setTextSize(FONT);
+    g.drawText(
+      (am.getRingerMode()==AudioManager.RINGER_MODE_NORMAL)?"":"マ",
+      38,FONT-2,p
+    );
+    //時刻-----------------------------------------------------------------------
     p.setColor(Color.BLACK);
     p.setTextSize(FONT);
     g.drawText(sdf.format(new Date()),90,FONT,p);
@@ -94,6 +102,7 @@ public class MainActivity extends AppCompatActivity{
   Handler handler=new Handler();
   int DELAY=1000;
   int batteryLevel=0;
+  AudioManager am;
   @Override
   protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
@@ -136,6 +145,8 @@ public class MainActivity extends AppCompatActivity{
       }
     },PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
     setContentView(view);
+    //マナーモード---------------------------------------------------------------
+    am=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
   }
   @Override
   protected void onResume(){
