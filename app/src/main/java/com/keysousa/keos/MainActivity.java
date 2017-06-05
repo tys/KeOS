@@ -144,7 +144,11 @@ public class MainActivity extends AppCompatActivity{
             startActivity(new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+telnumber)));
             break;
           case KeyEvent.KEYCODE_BACK:
-            curapp=0;
+            if(telnumber.isEmpty()){
+              curapp=0;
+            }else{
+              telnumber=telnumber.substring(0,telnumber.length()-1);
+            }
             break;
           case KeyEvent.KEYCODE_1:
             telnumber+="1";
@@ -183,6 +187,7 @@ public class MainActivity extends AppCompatActivity{
             telnumber+="#";
             break;
         }
+        break;
     }
     view.invalidate();
   }
