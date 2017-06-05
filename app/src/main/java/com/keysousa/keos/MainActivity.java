@@ -11,7 +11,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -23,19 +22,15 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Stack;
+
+import static com.keysousa.keos.Const.*;
 
 public class MainActivity extends AppCompatActivity{
-  String[] APPS=new String[]{
-    "メニュー",
-    "電話をかける"
-  };
-  int curapp=0;
+  Stack<App> tasks=new Stack<>();
   SimpleDateFormat sdf=new SimpleDateFormat("HH:mm");
-  int curpos=0;
-  String telnumber="";
   public void paint(){
     //画面クリア-----------------------------------------------------------------
     p.setColor(Color.WHITE);
@@ -81,126 +76,16 @@ public class MainActivity extends AppCompatActivity{
     g.drawRect(0,y,SW,y+FONT+2,p);
     p.setTextSize(FONT);
     p.setColor(Color.WHITE);
-    g.drawText(APPS[curapp],0,y+FONT,p);
+    g.drawText(tasks.peek().getAppName(),0,y+FONT,p);
     y+=FONT+3;
     //本文----------------------------------------------------------------------
-    switch(curapp){
-      //メニュー---------------------------------------------------------------
-      case 0:
-        //カーソル-------------------------------------------------------------------
-        p.setStyle(Paint.Style.FILL_AND_STROKE);
-        p.setColor(Color.BLACK);
-        g.drawRect(0,(curpos+2)*(FONT+2),width(APPS[curpos+1]),(curpos+3)*(FONT+2),p);
-        //リスト-------------------------------------------------------------------
-        p.setColor(Color.BLACK);
-        p.setStyle(Paint.Style.FILL);
-        p.setTextSize(FONT);
-        for(int i=1;i<APPS.length;i++){
-          String s=APPS[i];
-          p.setColor(i==curpos+1?Color.WHITE:Color.BLACK);
-          g.drawText(s,0,y+FONT,p);
-          y+=FONT+2;
-        }
-        break;
-      case 1:
-        //電話をかける-----------------------------------------------------------
-        p.setColor(Color.BLACK);
-        p.setTextSize(FONT);
-        y+=FONT;
-        g.drawText(telnumber,0,y,p);
-        break;
-    }
+    tasks.peek().paint(g);
   }
   void key(int code){
-    switch(curapp){
-      //メニュー-----------------------------------------------------------------
-      case 0:
-        switch(code){
-          case KeyEvent.KEYCODE_DPAD_DOWN:
-            if(curpos<APPS.length-2){
-              curpos++;
-              view.invalidate();
-            }
-            break;
-          case KeyEvent.KEYCODE_DPAD_UP:
-            if(curpos>0){
-              curpos--;
-              view.invalidate();
-            }
-            break;
-          case KeyEvent.KEYCODE_DPAD_CENTER:
-            curapp=curpos+1;
-            telnumber="";
-            break;
-          case KeyEvent.KEYCODE_BACK:
-            curapp=0;
-            break;
-        }
-        break;
-      //電話--------------------------------------------------------------------
-      case 1:
-        switch(code){
-          case KeyEvent.KEYCODE_DPAD_CENTER:
-            startActivity(new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+telnumber)));
-            break;
-          case KeyEvent.KEYCODE_BACK:
-            if(telnumber.isEmpty()){
-              curapp=0;
-            }else{
-              telnumber=telnumber.substring(0,telnumber.length()-1);
-            }
-            break;
-          case KeyEvent.KEYCODE_1:
-            telnumber+="1";
-            break;
-          case KeyEvent.KEYCODE_2:
-            telnumber+="2";
-            break;
-          case KeyEvent.KEYCODE_3:
-            telnumber+="3";
-            break;
-          case KeyEvent.KEYCODE_4:
-            telnumber+="4";
-            break;
-          case KeyEvent.KEYCODE_5:
-            telnumber+="5";
-            break;
-          case KeyEvent.KEYCODE_6:
-            telnumber+="6";
-            break;
-          case KeyEvent.KEYCODE_7:
-            telnumber+="7";
-            break;
-          case KeyEvent.KEYCODE_8:
-            telnumber+="8";
-            break;
-          case KeyEvent.KEYCODE_9:
-            telnumber+="9";
-            break;
-          case KeyEvent.KEYCODE_STAR:
-            telnumber+="*";
-            break;
-          case KeyEvent.KEYCODE_0:
-            telnumber+="0";
-            break;
-          case KeyEvent.KEYCODE_POUND:
-            telnumber+="#";
-            break;
-        }
-        break;
-    }
+    tasks.peek().key(code);
     view.invalidate();
   }
-  int width(String a){
-    try{
-      return FONT*a.getBytes("Shift_JIS").length/2;
-    }catch(UnsupportedEncodingException e){
-      return FONT*a.length();
-    }
-  }
-
   //システム処理=================================================================
-  int SW=120,SH=213,FONT=12;
   Canvas g;
   Paint p;
   Bitmap bitmap;
@@ -218,6 +103,7 @@ public class MainActivity extends AppCompatActivity{
     typeface=Typeface.createFromAsset(getAssets(),"PixelMplus12-Regular.ttf");
     p=new Paint();
     p.setTypeface(typeface);
+    tasks.add(new MenuApp(this));
     view=new View(this){
       @Override
       protected void onDraw(Canvas canvas){
