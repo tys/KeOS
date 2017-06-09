@@ -12,7 +12,8 @@ public class MenuApp extends App{
   int curpos=0;
   String[] APPS=new String[]{
     "電話をかける",
-    "マナーモード"
+    "マナーモード",
+    "SMS"
   };
   @Override
   public void paint(Canvas g){
@@ -21,7 +22,9 @@ public class MenuApp extends App{
     for(int i=0;i<APPS.length;i++){
       String s=APPS[i];
       if(i==1){
-        s=(main.am.getRingerMode()==AudioManager.RINGER_MODE_NORMAL)?"マナーモードに設定":"マナーモードを解除";
+        s=(main.am.getRingerMode()==AudioManager.RINGER_MODE_NORMAL)
+          ?"マナーモードに設定"
+          :"マナーモードを解除";
       }
       if(i==curpos){
         p.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -58,6 +61,9 @@ public class MenuApp extends App{
                 ?AudioManager.RINGER_MODE_VIBRATE
                 :AudioManager.RINGER_MODE_NORMAL
             );
+            break;
+          case 2:
+            main.tasks.push(new SMSApp(main));
             break;
         }
         break;

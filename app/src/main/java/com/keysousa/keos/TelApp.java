@@ -26,7 +26,9 @@ public class TelApp extends App{
   public void key(int code){
     switch(code){
       case KeyEvent.KEYCODE_DPAD_CENTER:
-        main.startActivity(new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+telnumber)));
+        main.startActivity(
+          new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+telnumber))
+        );
         break;
       case KeyEvent.KEYCODE_BACK:
         if(telnumber.isEmpty()){

@@ -113,13 +113,19 @@ public class MainActivity extends AppCompatActivity{
     p=new Paint();
     p.setTypeface(typeface);
     tasks.add(new MenuApp(this));
+    tasks.add(new SMSApp(this));
     view=new View(this){
       @Override
       protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
         paint();
         double z=(double)getWidth()/SW;
-        canvas.drawBitmap(bitmap,new Rect(0,0,SW,SH),new Rect(0,0,getWidth(),(int)(SH*z)),p);
+        canvas.drawBitmap(
+          bitmap,
+          new Rect(0,0,SW,SH),
+          new Rect(0,0,getWidth(),(int)(SH*z)),
+          p
+        );
       }
     };
     //電池----------------------------------------------------------------------
