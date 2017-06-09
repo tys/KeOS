@@ -6,9 +6,13 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.view.KeyEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.keysousa.keos.Const.*;
 
 public class TelApp extends App{
+  Map<Integer,String> keymap;
   String telnumber="";
   @Override
   public void paint(Canvas g){
@@ -31,19 +35,10 @@ public class TelApp extends App{
           telnumber=telnumber.substring(0,telnumber.length()-1);
         }
         break;
-      case KeyEvent.KEYCODE_1:
-      case KeyEvent.KEYCODE_2:
-      case KeyEvent.KEYCODE_3:
-      case KeyEvent.KEYCODE_4:
-      case KeyEvent.KEYCODE_5:
-      case KeyEvent.KEYCODE_6:
-      case KeyEvent.KEYCODE_7:
-      case KeyEvent.KEYCODE_8:
-      case KeyEvent.KEYCODE_9:
-      case KeyEvent.KEYCODE_STAR:
-      case KeyEvent.KEYCODE_0:
-      case KeyEvent.KEYCODE_POUND:
-        telnumber+=Utils.keyCodeToString(code);
+      default:
+        if(keymap.containsKey(code)){
+          telnumber+=keymap.get(code);
+        }
         break;
     }
   }
@@ -53,5 +48,18 @@ public class TelApp extends App{
   }
   public TelApp(MainActivity main){
     super(main);
+    keymap=new HashMap<>();
+    keymap.put(KeyEvent.KEYCODE_1,"1");
+    keymap.put(KeyEvent.KEYCODE_2,"2");
+    keymap.put(KeyEvent.KEYCODE_3,"3");
+    keymap.put(KeyEvent.KEYCODE_4,"4");
+    keymap.put(KeyEvent.KEYCODE_5,"5");
+    keymap.put(KeyEvent.KEYCODE_6,"6");
+    keymap.put(KeyEvent.KEYCODE_7,"7");
+    keymap.put(KeyEvent.KEYCODE_8,"8");
+    keymap.put(KeyEvent.KEYCODE_9,"9");
+    keymap.put(KeyEvent.KEYCODE_STAR,"*");
+    keymap.put(KeyEvent.KEYCODE_0,"0");
+    keymap.put(KeyEvent.KEYCODE_POUND,"#");
   }
 }
