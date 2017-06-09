@@ -32,40 +32,18 @@ public class TelApp extends App{
         }
         break;
       case KeyEvent.KEYCODE_1:
-        telnumber+="1";
-        break;
       case KeyEvent.KEYCODE_2:
-        telnumber+="2";
-        break;
       case KeyEvent.KEYCODE_3:
-        telnumber+="3";
-        break;
       case KeyEvent.KEYCODE_4:
-        telnumber+="4";
-        break;
       case KeyEvent.KEYCODE_5:
-        telnumber+="5";
-        break;
       case KeyEvent.KEYCODE_6:
-        telnumber+="6";
-        break;
       case KeyEvent.KEYCODE_7:
-        telnumber+="7";
-        break;
       case KeyEvent.KEYCODE_8:
-        telnumber+="8";
-        break;
       case KeyEvent.KEYCODE_9:
-        telnumber+="9";
-        break;
       case KeyEvent.KEYCODE_STAR:
-        telnumber+="*";
-        break;
       case KeyEvent.KEYCODE_0:
-        telnumber+="0";
-        break;
       case KeyEvent.KEYCODE_POUND:
-        telnumber+="#";
+        telnumber+=Utils.keyCodeToString(code);
         break;
     }
   }

@@ -6,8 +6,6 @@ import android.graphics.Paint;
 import android.media.AudioManager;
 import android.view.KeyEvent;
 
-import java.io.UnsupportedEncodingException;
-
 import static com.keysousa.keos.Const.*;
 
 public class MenuApp extends App{
@@ -28,7 +26,7 @@ public class MenuApp extends App{
       if(i==curpos){
         p.setStyle(Paint.Style.FILL_AND_STROKE);
         p.setColor(Color.BLACK);
-        g.drawRect(0,y,width(s),y+FONT+2,p);
+        g.drawRect(0,y,Utils.width(s),y+FONT+2,p);
       }
       p.setStyle(Paint.Style.FILL);
       p.setColor(i==curpos?Color.WHITE:Color.BLACK);
@@ -63,13 +61,6 @@ public class MenuApp extends App{
             break;
         }
         break;
-    }
-  }
-  int width(String a){
-    try{
-      return FONT*a.getBytes("Shift_JIS").length/2;
-    }catch(UnsupportedEncodingException e){
-      return FONT*a.length();
     }
   }
   @Override
