@@ -1,14 +1,11 @@
 package com.keysousa.keos;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.view.KeyEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import static com.keysousa.keos.Const.*;
-
-import static com.keysousa.keos.Const.FONT;
 
 public class HomeApp extends App{
   SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd(E)");
@@ -17,7 +14,7 @@ public class HomeApp extends App{
   }
   @Override
   public void paint(Canvas g){
-    p.setColor(Color.BLACK);
+    p.setColor(COLOR_FORE);
     String date=sdf.format(new Date());
     g.drawText(
       date,

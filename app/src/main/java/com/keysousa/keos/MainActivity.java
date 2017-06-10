@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -33,12 +32,12 @@ public class MainActivity extends AppCompatActivity{
   SimpleDateFormat sdf=new SimpleDateFormat("HH:mm");
   public void paint(){
     //画面クリア-----------------------------------------------------------------
-    p.setColor(Color.WHITE);
+    p.setColor(COLOR_BACK);
     g.drawRect(0,0,SW,SH,p);
     int y=0;
     //電池----------------------------------------------------------------------
     p.setStyle(Paint.Style.STROKE);
-    p.setColor(Color.BLACK);
+    p.setColor(COLOR_FORE);
     g.drawRect(2,1,16,11,p);
     p.setStyle(Paint.Style.FILL);
     g.drawRect(1,4,2,8,p);
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity{
       g.drawRect(12,3,15,10,p);
     }
     //アンテナ-------------------------------------------------------------------
-    p.setColor(Color.BLACK);
+    p.setColor(COLOR_FORE);
     p.setStyle(Paint.Style.STROKE);
     Path ph=new Path();
     ph.moveTo(19,1);
@@ -66,24 +65,24 @@ public class MainActivity extends AppCompatActivity{
     g.drawRect(30,4,32,12,p);
     g.drawRect(33,1,35,12,p);
     //マナーモード---------------------------------------------------------------
-    p.setColor(Color.BLACK);
+    p.setColor(COLOR_FORE);
     p.setTextSize(FONT);
     g.drawText(
       (am.getRingerMode()==AudioManager.RINGER_MODE_NORMAL)?"":"マ",
       38,FONT-2,p
     );
     //時刻-----------------------------------------------------------------------
-    p.setColor(Color.BLACK);
+    p.setColor(COLOR_FORE);
     p.setTextSize(FONT);
     g.drawText(sdf.format(new Date()),90,FONT,p);
     //タイトル-------------------------------------------------------------------
     if(tasks.peek().getAppName()!=null){
       y+=FONT+1;
       p.setStyle(Paint.Style.FILL);
-      p.setColor(Color.BLACK);
+      p.setColor(COLOR_FORE);
       g.drawRect(0,y,SW,y+FONT+2,p);
       p.setTextSize(FONT);
-      p.setColor(Color.WHITE);
+      p.setColor(COLOR_BACK);
       g.drawText(tasks.peek().getAppName(),0,y+FONT,p);
       y+=FONT+3;
     }

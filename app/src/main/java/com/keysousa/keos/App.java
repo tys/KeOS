@@ -1,9 +1,10 @@
 package com.keysousa.keos;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 
+import static com.keysousa.keos.Const.COLOR_BACK;
+import static com.keysousa.keos.Const.COLOR_FORE;
 import static com.keysousa.keos.Const.FONT;
 import static com.keysousa.keos.Const.SH;
 import static com.keysousa.keos.Const.SW;
@@ -23,7 +24,7 @@ public abstract class App{
       if(menus[i].isEmpty()){
         continue;
       }
-      p.setColor(Color.BLACK);
+      p.setColor(COLOR_FORE);
       g.drawRect(
         i*SW/menus.length+1,
         SH-FONT-1,
@@ -31,7 +32,7 @@ public abstract class App{
         SH,
         p
       );
-      p.setColor(Color.WHITE);
+      p.setColor(COLOR_BACK);
       g.drawText(
         menus[i],
         SW*i/menus.length+(SW/menus.length-Utils.width(menus[i]))/2,

@@ -1,7 +1,6 @@
 package com.keysousa.keos;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.AudioManager;
 import android.view.KeyEvent;
@@ -26,11 +25,11 @@ public class MenuApp extends App{
       }
       if(i==curpos){
         p.setStyle(Paint.Style.FILL_AND_STROKE);
-        p.setColor(Color.BLACK);
+        p.setColor(COLOR_FORE);
         g.drawRect(0,y,Utils.width(s),y+FONT+2,p);
-        p.setColor(Color.WHITE);
+        p.setColor(COLOR_BACK);
       }else{
-        p.setColor(Color.BLACK);
+        p.setColor(COLOR_FORE);
       }
       g.drawText(s,0,y+FONT,p);
       y+=FONT+2;

@@ -2,7 +2,6 @@ package com.keysousa.keos;
 
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.net.Uri;
 import android.view.KeyEvent;
 
@@ -17,7 +16,7 @@ public class TelApp extends App{
   @Override
   public void paint(Canvas g){
     int y=APP_Y;
-    p.setColor(Color.BLACK);
+    p.setColor(COLOR_FORE);
     p.setTextSize(FONT);
     y+=FONT;
     g.drawText(telnumber,0,y,p);

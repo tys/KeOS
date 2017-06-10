@@ -1,7 +1,6 @@
 package com.keysousa.keos;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.telephony.SmsManager;
 import android.view.KeyEvent;
@@ -49,27 +48,27 @@ public class SMSApp extends App{
   }
   @Override
   public void paint(Canvas g){
-    p.setColor(Color.BLACK);
+    p.setColor(COLOR_FORE);
     int y=APP_Y;
     //宛先----------------------------------------------------------------------
     if(curpos==0){
       p.setStyle(Paint.Style.FILL_AND_STROKE);
-      p.setColor(Color.BLACK);
+      p.setColor(COLOR_FORE);
       g.drawRect(0,y,SW,y+FONT+2,p);
-      p.setColor(Color.WHITE);
+      p.setColor(COLOR_BACK);
     }else{
-      p.setColor(Color.BLACK);
+      p.setColor(COLOR_FORE);
     }
     g.drawText("[宛先] "+telnumber,0,y+FONT,p);
     //本文----------------------------------------------------------------------
     y+=FONT+2;
     if(curpos==1){
       p.setStyle(Paint.Style.FILL_AND_STROKE);
-      p.setColor(Color.BLACK);
+      p.setColor(COLOR_FORE);
       g.drawRect(0,y,SW,SH-FONT-2,p);
-      p.setColor(Color.WHITE);
+      p.setColor(COLOR_BACK);
     }else{
-      p.setColor(Color.BLACK);
+      p.setColor(COLOR_FORE);
     }
     y+=FONT;
     g.drawText("[本文]",0,y,p);
