@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity{
     p=new Paint();
     p.setTypeface(typeface);
     tasks.add(new MenuApp(this));
-    tasks.add(new SMSApp(this));
     view=new View(this){
       @Override
       protected void onDraw(Canvas canvas){

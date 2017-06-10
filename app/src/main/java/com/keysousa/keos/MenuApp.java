@@ -11,9 +11,7 @@ import static com.keysousa.keos.Const.*;
 public class MenuApp extends App{
   int curpos=0;
   String[] APPS=new String[]{
-    "電話をかける",
     "マナーモード",
-    "SMS"
   };
   @Override
   public void paint(Canvas g){
@@ -21,7 +19,7 @@ public class MenuApp extends App{
     p.setTextSize(FONT);
     for(int i=0;i<APPS.length;i++){
       String s=APPS[i];
-      if(i==1){
+      if(i==0){
         s=(main.am.getRingerMode()==AudioManager.RINGER_MODE_NORMAL)
           ?"マナーモードに設定"
           :"マナーモードを解除";
@@ -52,20 +50,20 @@ public class MenuApp extends App{
           curpos--;
         }
         break;
+      case KeyEvent.KEYCODE_F3:
+        main.tasks.push(new SMSApp(main));
+        break;
+      case KeyEvent.KEYCODE_CALL:
+        main.tasks.push(new TelApp(main));
+        break;
       case KeyEvent.KEYCODE_DPAD_CENTER:
         switch(curpos){
           case 0:
-            main.tasks.push(new TelApp(main));
-            break;
-          case 1:
             main.am.setRingerMode(
               (main.am.getRingerMode()==AudioManager.RINGER_MODE_NORMAL)
                 ?AudioManager.RINGER_MODE_VIBRATE
                 :AudioManager.RINGER_MODE_NORMAL
             );
-            break;
-          case 2:
-            main.tasks.push(new SMSApp(main));
             break;
         }
         break;
