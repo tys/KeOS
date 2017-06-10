@@ -30,12 +30,14 @@ public class MenuApp extends App{
         p.setStyle(Paint.Style.FILL_AND_STROKE);
         p.setColor(Color.BLACK);
         g.drawRect(0,y,Utils.width(s),y+FONT+2,p);
+        p.setColor(Color.WHITE);
+      }else{
+        p.setColor(Color.BLACK);
       }
-      p.setStyle(Paint.Style.FILL);
-      p.setColor(i==curpos?Color.WHITE:Color.BLACK);
       g.drawText(s,0,y+FONT,p);
       y+=FONT+2;
     }
+    paintBottomMenu(new String[]{"","開く",""},g);
   }
   @Override
   public void key(int code){

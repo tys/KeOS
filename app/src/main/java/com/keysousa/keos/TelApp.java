@@ -21,21 +21,23 @@ public class TelApp extends App{
     p.setTextSize(FONT);
     y+=FONT;
     g.drawText(telnumber,0,y,p);
+    paintBottomMenu(new String[]{"戻る","","発信"},g);
   }
   @Override
   public void key(int code){
     switch(code){
-      case KeyEvent.KEYCODE_DPAD_CENTER:
+      case KeyEvent.KEYCODE_BACK:
+        if(!telnumber.isEmpty()){
+          telnumber=telnumber.substring(0,telnumber.length()-1);
+        }
+        break;
+      case KeyEvent.KEYCODE_F1:
+        main.tasks.pop();
+        break;
+      case KeyEvent.KEYCODE_F2:
         main.startActivity(
           new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+telnumber))
         );
-        break;
-      case KeyEvent.KEYCODE_BACK:
-        if(telnumber.isEmpty()){
-          main.tasks.pop();
-        }else{
-          telnumber=telnumber.substring(0,telnumber.length()-1);
-        }
         break;
       default:
         if(keymap.containsKey(code)){
