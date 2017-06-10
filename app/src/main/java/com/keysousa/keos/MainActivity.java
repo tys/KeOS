@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -78,14 +77,16 @@ public class MainActivity extends AppCompatActivity{
     p.setTextSize(FONT);
     g.drawText(sdf.format(new Date()),90,FONT,p);
     //タイトル-------------------------------------------------------------------
-    y+=FONT+1;
-    p.setStyle(Paint.Style.FILL);
-    p.setColor(Color.BLACK);
-    g.drawRect(0,y,SW,y+FONT+2,p);
-    p.setTextSize(FONT);
-    p.setColor(Color.WHITE);
-    g.drawText(tasks.peek().getAppName(),0,y+FONT,p);
-    y+=FONT+3;
+    if(tasks.peek().getAppName()!=null){
+      y+=FONT+1;
+      p.setStyle(Paint.Style.FILL);
+      p.setColor(Color.BLACK);
+      g.drawRect(0,y,SW,y+FONT+2,p);
+      p.setTextSize(FONT);
+      p.setColor(Color.WHITE);
+      g.drawText(tasks.peek().getAppName(),0,y+FONT,p);
+      y+=FONT+3;
+    }
     //本文----------------------------------------------------------------------
     tasks.peek().paint(g);
   }
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity{
     typeface=Typeface.createFromAsset(getAssets(),"PixelMplus12-Regular.ttf");
     p=new Paint();
     p.setTypeface(typeface);
-    tasks.add(new MenuApp(this));
+    tasks.add(new HomeApp(this));
     view=new View(this){
       @Override
       protected void onDraw(Canvas canvas){

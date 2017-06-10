@@ -50,12 +50,6 @@ public class MenuApp extends App{
           curpos--;
         }
         break;
-      case KeyEvent.KEYCODE_F3:
-        main.tasks.push(new SMSApp(main));
-        break;
-      case KeyEvent.KEYCODE_CALL:
-        main.tasks.push(new TelApp(main));
-        break;
       case KeyEvent.KEYCODE_DPAD_CENTER:
         switch(curpos){
           case 0:
@@ -66,6 +60,9 @@ public class MenuApp extends App{
             );
             break;
         }
+        break;
+      case KeyEvent.KEYCODE_BACK:
+        main.tasks.pop();
         break;
     }
   }
