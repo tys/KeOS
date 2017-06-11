@@ -12,11 +12,12 @@ import static com.keysousa.keos.Const.*;
 
 public class SMSApp extends App{
   String buf="";
-  Integer ccode,cindex;
+  Integer ccode,cindex,dindex;
   Map<Integer,String> keymapTel;
   Map<Integer,String> keymap;
+  Map<String,String> dakuon;
   String telnumber="";
-  int curpos=0;
+  int curpos=1;
 
   public SMSApp(MainActivity main){
     super(main);
@@ -45,6 +46,46 @@ public class SMSApp extends App{
     keymap.put(KeyEvent.KEYCODE_9,"らりるれろ");
     keymap.put(KeyEvent.KEYCODE_0,"わをんゎ、。ー・〜！？．　");
     keymap.put(KeyEvent.KEYCODE_STAR,"、。ー・〜！？　");
+    dakuon=new HashMap<>();
+    dakuon.put("あ","ぁ");
+    dakuon.put("い","ぃ");
+    dakuon.put("う","ぅヴ");
+    dakuon.put("え","ぇ");
+    dakuon.put("お","ぉ");
+    dakuon.put("ぁ","あ");
+    dakuon.put("ぃ","い");
+    dakuon.put("ぅ","う");
+    dakuon.put("ぇ","え");
+    dakuon.put("ぉ","お");
+    dakuon.put("か","が");
+    dakuon.put("き","ぎ");
+    dakuon.put("く","ぐ");
+    dakuon.put("け","げ");
+    dakuon.put("こ","ご");
+    dakuon.put("さ","ざ");
+    dakuon.put("し","じ");
+    dakuon.put("す","ず");
+    dakuon.put("せ","ぜ");
+    dakuon.put("そ","ぞ");
+    dakuon.put("た","だ");
+    dakuon.put("ち","ぢ");
+    dakuon.put("つ","っ");
+    dakuon.put("て","で");
+    dakuon.put("と","ど");
+    dakuon.put("っ","づつ");
+    dakuon.put("は","ばぱ");
+    dakuon.put("ひ","びぴ");
+    dakuon.put("ふ","ぶぷ");
+    dakuon.put("へ","べぺ");
+    dakuon.put("ほ","ぼぽ");
+    dakuon.put("や","ゃ");
+    dakuon.put("ゆ","ゅ");
+    dakuon.put("よ","ょ");
+    dakuon.put("わ","ゎ");
+    dakuon.put("ゎ","わ");
+    for(Map.Entry<String,String> e:dakuon.entrySet()){
+      dakuon.put(e.getKey(),e.getKey()+e.getValue());
+    }
   }
   @Override
   public void paint(Canvas g){
@@ -60,6 +101,10 @@ public class SMSApp extends App{
       p.setColor(COLOR_FORE);
     }
     g.drawText("[宛先] "+telnumber,0,y+FONT,p);
+    int x=Utils.width("[宛先] "+telnumber);
+    if(curpos==0){
+      g.drawLine(x,y+2,x,y+FONT+1,p);
+    }
     //本文----------------------------------------------------------------------
     y+=FONT+2;
     if(curpos==1){
@@ -72,21 +117,30 @@ public class SMSApp extends App{
     }
     y+=FONT;
     g.drawText("[本文]",0,y,p);
-    y+=FONT;
     String buf2=buf;
     if(ccode!=null){
-      buf2+=keymap.get(ccode).charAt(cindex);
+      if(dindex!=null){
+        buf2+=dakuon.get(""+keymap.get(ccode).charAt(cindex)).charAt(dindex);
+      }else{
+        buf2+=keymap.get(ccode).charAt(cindex);
+      }
     }
-    int s=0,x=0;
+    x=0;
+    int s=0;
     for(int i=0;i<buf2.length();i++){
       x+=Utils.width(""+buf2.charAt(i));
       int nw=(i==buf2.length()-1)?0:Utils.width(""+buf2.charAt(i+1));
       if(x+nw>SW||i==buf2.length()-1){
-        g.drawText(buf2.substring(s,i+1),0,y,p);
-        s=i+1;
-        x=0;
-        y+=FONT;
+        g.drawText(buf2.substring(s,i+1),0,y+FONT,p);
+        if(i<buf2.length()-1){
+          s=i+1;
+          x=0;
+          y+=FONT;
+        }
       }
+    }
+    if(curpos==1){
+      g.drawLine(x,y+2,x,y+FONT+1,p);
     }
     paintBottomMenu(new String[]{"戻る","","送信"},g);
   }
@@ -113,6 +167,7 @@ public class SMSApp extends App{
           case 1:
             if(ccode!=null){
               ccode=null;
+              dindex=null;
             }else if(!buf.isEmpty()){
               buf=buf.substring(0,buf.length()-1);
             }
@@ -124,6 +179,9 @@ public class SMSApp extends App{
           buf+=keymap.get(ccode).charAt(cindex);
           ccode=null;
           cindex=0;
+          dindex=null;
+        }else{
+          buf+="　";
         }
         break;
       case KeyEvent.KEYCODE_POUND:
@@ -137,8 +195,13 @@ public class SMSApp extends App{
         break;
       case KeyEvent.KEYCODE_F2:
         if(ccode!=null){
-          buf+=keymap.get(ccode).charAt(cindex);
+          if(dindex!=null){
+            buf+=dakuon.get(""+keymap.get(ccode).charAt(cindex)).charAt(dindex);
+          }else{
+            buf+=keymap.get(ccode).charAt(cindex);
+          }
           ccode=null;
+          dindex=null;
         }
         try{
           SmsManager.getDefault().sendTextMessage(telnumber,null,buf,null,null);
@@ -155,13 +218,24 @@ public class SMSApp extends App{
             }
             break;
           case 1:
-            if(keymap.containsKey(code)){
-              if(ccode==null||code!=ccode){
+            if(code==KeyEvent.KEYCODE_STAR&&ccode!=null&&dakuon.containsKey(""+keymap.get(ccode).charAt(cindex))){
+              if(dindex==null){
+                dindex=1;
+              }else{
+                dindex=(dindex+1)%dakuon.get(""+keymap.get(ccode).charAt(cindex)).length();
+              }
+            }else if(keymap.containsKey(code)){
+              if(ccode==null||code!=ccode||dindex!=null){
                 if(ccode!=null){
-                  buf+=keymap.get(ccode).charAt(cindex);
+                  if(dindex!=null){
+                    buf+=dakuon.get(""+keymap.get(ccode).charAt(cindex)).charAt(dindex);
+                  }else{
+                    buf+=keymap.get(ccode).charAt(cindex);
+                  }
                 }
                 ccode=code;
                 cindex=0;
+                dindex=null;
               }else{
                 cindex=(cindex+1)%keymap.get(ccode).length();
               }
