@@ -12,8 +12,9 @@ public class MenuApp extends App{
   String[] APPS=new String[]{
     "電話",
     "マナーモード",
-    "SMS",
-    "配色設定"
+    "SMS送信",
+    "配色設定",
+    "SMS受信"
   };
   @Override
   public void paint(Canvas g){
@@ -69,6 +70,10 @@ public class MenuApp extends App{
             break;
           case 3:
             main.tasks.push(new ColorChangeApp(main));
+            break;
+          case 4:
+            main.tasks.push(new SMSInboxApp(main));
+            break;
         }
         break;
       case KeyEvent.KEYCODE_BACK:
