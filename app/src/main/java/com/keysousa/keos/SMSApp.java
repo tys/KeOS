@@ -92,14 +92,6 @@ public class SMSApp extends App{
     p.setColor(COLOR_FORE);
     int y=APP_Y;
     //宛先----------------------------------------------------------------------
-    if(curpos==0){
-      p.setStyle(Paint.Style.FILL_AND_STROKE);
-      p.setColor(COLOR_FORE);
-      g.drawRect(0,y,SW,y+FONT+2,p);
-      p.setColor(COLOR_BACK);
-    }else{
-      p.setColor(COLOR_FORE);
-    }
     g.drawText("[宛先] "+telnumber,0,y+FONT,p);
     int x=Utils.width("[宛先] "+telnumber);
     if(curpos==0){
@@ -107,14 +99,6 @@ public class SMSApp extends App{
     }
     //本文----------------------------------------------------------------------
     y+=FONT+2;
-    if(curpos==1){
-      p.setStyle(Paint.Style.FILL_AND_STROKE);
-      p.setColor(COLOR_FORE);
-      g.drawRect(0,y,SW,SH-FONT-2,p);
-      p.setColor(COLOR_BACK);
-    }else{
-      p.setColor(COLOR_FORE);
-    }
     y+=FONT;
     g.drawText("[本文]",0,y,p);
     String buf2=buf;
